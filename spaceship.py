@@ -2,7 +2,7 @@ import pygame
 
 from config import *
 from tools import MovingDirection
-
+from ui import Score
 
 class Missile:
     def __init__(self):
@@ -91,6 +91,10 @@ class Spaceship:
         self.delay_since_explosion = 0
         self.is_active = True
 
+        self.dash = False
+
+        self.score = Score()
+
     def reset(self):
         self.shoot_sound.stop()
         self.destruction_sound.stop()
@@ -142,21 +146,39 @@ class Spaceship:
                 if event.key == pygame.K_LEFT:
                     self.moving_direction = MovingDirection.LEFT
 
+                if event.key == pygame.K_a:
+                    self.moving_direction = MovingDirection.LEFT
+
                 if event.key == pygame.K_RIGHT:
+                    self.moving_direction = MovingDirection.RIGHT
+
+                if event.key == pygame.K_d:
                     self.moving_direction = MovingDirection.RIGHT
 
                 if event.key == pygame.K_SPACE:
                     self.is_firing = True
 
+                if event.key == pygame.K_w:
+                    self.dash = True
+
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT and self.moving_direction == MovingDirection.LEFT:
+                    self.moving_direction = MovingDirection.IDLE
+
+                if event.key == pygame.K_a and self.moving_direction == MovingDirection.LEFT:
                     self.moving_direction = MovingDirection.IDLE
 
                 if event.key == pygame.K_RIGHT and self.moving_direction == MovingDirection.RIGHT:
                     self.moving_direction = MovingDirection.IDLE
 
+                if event.key == pygame.K_d and self.moving_direction == MovingDirection.RIGHT:
+                    self.moving_direction = MovingDirection.IDLE
+
                 if event.key == pygame.K_SPACE:
                     self.is_firing = False
+
+                if event.key == pygame.K_w:
+                    self.dash = False
 
     def _move(self, dt):
 
@@ -167,6 +189,10 @@ class Spaceship:
         # Else, check how many pixel to move
         dt_s = dt / 1000
         self.move_amount += dt_s * SPACESHIP_SPEED_PIXEL_PER_SECOND
+
+        if self.dash:
+            self.move_amount *= 2
+
         if self.move_amount > 1.:
 
             # move in the given direction

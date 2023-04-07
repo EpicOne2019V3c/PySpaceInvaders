@@ -43,7 +43,6 @@ class PySpaceInvaders:
         clock = pygame.time.Clock()
         while True:
             dt = clock.tick()
-
             update_count = self._get_update_count(dt)
             if update_count > 0:
 
