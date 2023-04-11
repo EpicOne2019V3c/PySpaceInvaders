@@ -2,8 +2,6 @@ import pygame
 
 from config import *
 from tools import MovingDirection
-from ui import Score
-
 class Missile:
     def __init__(self):
         self.rect = None
@@ -92,8 +90,6 @@ class Spaceship:
         self.is_active = True
 
         self.dash = False
-
-        self.score = Score()
 
     def reset(self):
         self.shoot_sound.stop()

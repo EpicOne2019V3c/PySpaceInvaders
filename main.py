@@ -3,6 +3,7 @@
 import math
 import random
 import sys
+import shelve
 
 import pygame
 
@@ -146,6 +147,16 @@ class PySpaceInvaders:
         self._collide_alien_and_barricades()
         self._collide_missile_and_saucer()
 
+    def score_save(self, current_score):
+        try:
+            d = open('data.txt', 'w')
+            print(current_score)
+            d.write(str(current_score))
+            d.close()
+        except:
+            print('error with saving')
+
+
     def _collide_missile_and_aliens(self):
 
         # If no missile, no collision to check
@@ -164,6 +175,7 @@ class PySpaceInvaders:
 
                 # increase score
                 self.score.value += alien.type * 10
+                self.score_save(self.score.value)
 
     def _collide_missile_and_saucer(self):
 
@@ -182,6 +194,7 @@ class PySpaceInvaders:
 
             # increase score
             self.score.value += 300
+            self.score_save(self.score.value)
 
     def _collide_spaceship_and_aliens(self):
 
