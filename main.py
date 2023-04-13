@@ -3,8 +3,6 @@
 import math
 import random
 import sys
-import shelve
-
 import pygame
 
 from alien import Aliens
@@ -150,13 +148,11 @@ class PySpaceInvaders:
     def score_save(self, current_score):
         try:
             d = open('data.txt', 'w')
-            print(current_score)
             d.write(str(current_score))
             d.close()
         except:
             print('error with saving')
 
-#CHANGE
     def _collide_missile_and_aliens(self):
 
         # If no missile, no collision to check

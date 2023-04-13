@@ -2,6 +2,7 @@ import pygame
 
 from config import *
 from tools import MovingDirection
+
 class Missile:
     def __init__(self):
         self.rect = None
@@ -68,8 +69,19 @@ class Missile:
     def set_inactive(self):
         self.is_active = False
 
-class Spaceship:
 
+def get_score():
+    try:
+        d = open('data.txt', 'r')
+        total = int(d.read())
+        x = open('data.txt', 'w')
+        x.write(str(total - 100))
+        print(total - 100)
+        d.close()
+    except:
+        print('error with uploading')
+
+class Spaceship:
     def __init__(self):
 
         self.sprite = pygame.image.load(SPRITE_PATH + SPACESHIP_SPRITE_NAME)
@@ -188,6 +200,7 @@ class Spaceship:
 
         if self.dash:
             self.move_amount *= 2
+            get_score()
 
         if self.move_amount > 1.:
 
