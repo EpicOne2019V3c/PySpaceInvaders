@@ -4,6 +4,8 @@ import sys
 
 import pygame
 
+import counter
+
 from alien import Aliens
 from config import *
 from decor import Ground, Barricades
@@ -36,6 +38,8 @@ class PySpaceInvaders:
         self.high_score = HighScore()
         self.life_counter = LifeCounter()
         self.game_over = GameOver()
+
+
 
     def play(self):
         clock = pygame.time.Clock()
@@ -145,6 +149,11 @@ class PySpaceInvaders:
         self._collide_alien_and_barricades()
         self._collide_missile_and_saucer()
 
+      #  def score_save(self, current_score):
+      #      d=shelve.open('data.txt')
+     #       d['score'] = current_score
+     #       d.close()
+
     def _collide_missile_and_aliens(self):
 
         # If no missile, no collision to check
@@ -163,6 +172,8 @@ class PySpaceInvaders:
 
                 # increase score
                 self.score.value += alien.type * 10
+                counter.Counter.addten(counter.Counter)
+              #  score_save(self, self.score.value)
 
     def _collide_missile_and_saucer(self):
 
@@ -181,6 +192,8 @@ class PySpaceInvaders:
 
             # increase score
             self.score.value += 300
+            counter.Counter.addthreehundred(counter.Counter)
+         #   score_save(self, self.score.value)
 
     def _collide_spaceship_and_aliens(self):
 
