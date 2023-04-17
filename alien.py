@@ -4,7 +4,24 @@ import pygame
 
 from config import *
 from tools import MovingDirection
-import counter
+
+class Counter:
+    real_score = 0
+
+    def __init__(self):
+        self.real_score = 0
+
+    def addten(self):
+        self.real_score += 10
+        return self.real_score
+
+    def addthreehundred(self):
+        self.real_score += 300
+        return self.real_score
+
+    def getdawg(self):
+        return self.real_score
+
 
 class Saucer:
 
@@ -274,11 +291,10 @@ class Aliens:
 
         # Incrementing delay since last firing time
         self.last_firing_delay += dt
-        self.difficulty = counter.Counter.getrealscore(counter.Counter)
-
+        self.difficulty = Counter.getdawg(Counter)/3
         # Fire as many laser as needed
-        while self.last_firing_delay > ALIEN_FIRING_PERIOD_MS+self.difficulty:
-            self.last_firing_delay -= ALIEN_FIRING_PERIOD_MS+self.difficulty
+        while self.last_firing_delay > ALIEN_FIRING_PERIOD_MS-self.difficulty:
+            self.last_firing_delay -= ALIEN_FIRING_PERIOD_MS-self.difficulty
 
             # Find all aliens that may fire
             firing_aliens = self._firing_aliens()

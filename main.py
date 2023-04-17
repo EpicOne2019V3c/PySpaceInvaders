@@ -4,8 +4,9 @@ import sys
 
 import pygame
 
-import counter
+import alien
 
+from alien import Counter
 from alien import Aliens
 from config import *
 from decor import Ground, Barricades
@@ -172,7 +173,7 @@ class PySpaceInvaders:
 
                 # increase score
                 self.score.value += alien.type * 10
-                counter.Counter.addten(counter.Counter)
+                Counter.addten(Counter)
               #  score_save(self, self.score.value)
 
     def _collide_missile_and_saucer(self):
@@ -192,7 +193,6 @@ class PySpaceInvaders:
 
             # increase score
             self.score.value += 300
-            counter.Counter.addthreehundred(counter.Counter)
          #   score_save(self, self.score.value)
 
     def _collide_spaceship_and_aliens(self):
