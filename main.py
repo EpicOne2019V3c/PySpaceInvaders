@@ -95,6 +95,15 @@ class PySpaceInvaders:
 
         return update_count
 
+    def score_save(self, update):
+        try:
+            d = open('data.txt', 'w')
+            d.write(str(update))
+            d.close()
+
+        except:
+            print('error with saving')
+
     def _get_events(self):
         events = []
         for event in pygame.event.get():
@@ -163,6 +172,8 @@ class PySpaceInvaders:
 
                 # increase score
                 self.score.value += alien.type * 10
+                self.score_save(self.score.value)
+
 
     def _collide_missile_and_saucer(self):
 
@@ -181,7 +192,7 @@ class PySpaceInvaders:
 
             # increase score
             self.score.value += 300
-
+            self.score_save(self.score.value)
     def _collide_spaceship_and_aliens(self):
 
         # Get each alien rect and check collision with spaceship
