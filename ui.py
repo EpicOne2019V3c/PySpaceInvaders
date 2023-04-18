@@ -2,7 +2,8 @@ import pygame
 
 from config import *
 
-
+#def getscore(self):
+#    return self.score.value
 class Score:
 
     def __init__(self):

@@ -5,10 +5,28 @@ import pygame
 from config import *
 from tools import MovingDirection
 
+class Counter:
+    real_score = 0
+
+    def __init__(self):
+        self.real_score = 0
+
+    def addten(self):
+        self.real_score += 10
+        return self.real_score
+
+    def addthreehundred(self):
+        self.real_score += 300
+        return self.real_score
+
+    def getdawg(self):
+        return self.real_score
+
 
 class Saucer:
 
     def __init__(self):
+
 
         self.sprite = pygame.image.load(SPRITE_PATH + SAUCER_SPRITE_NAME)
         self.explosion_sprite = pygame.image.load(SPRITE_PATH + SAUCER_EXPLOSION_SPRITE_NAME)
@@ -24,6 +42,8 @@ class Saucer:
         self.saucer_sound = pygame.mixer.Sound(SOUND_PATH + SAUCER_SOUND)
         self.saucer_destruction_sound = pygame.mixer.Sound(SOUND_PATH + SAUCER_DESTRUCTION_SOUND)
         self.is_active = False
+
+        self.difficulty= 0
 
     def launch(self, top_left_pos, direction: MovingDirection):
         self.rect = self.sprite.get_rect(topleft=top_left_pos)
@@ -271,10 +291,10 @@ class Aliens:
 
         # Incrementing delay since last firing time
         self.last_firing_delay += dt
-
+        self.difficulty = Counter.getdawg(Counter)/3
         # Fire as many laser as needed
-        while self.last_firing_delay > ALIEN_FIRING_PERIOD_MS:
-            self.last_firing_delay -= ALIEN_FIRING_PERIOD_MS
+        while self.last_firing_delay > ALIEN_FIRING_PERIOD_MS-self.difficulty:
+            self.last_firing_delay -= ALIEN_FIRING_PERIOD_MS-self.difficulty
 
             # Find all aliens that may fire
             firing_aliens = self._firing_aliens()
