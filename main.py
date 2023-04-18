@@ -37,6 +37,10 @@ class PySpaceInvaders:
         self.high_score = HighScore()
         self.life_counter = LifeCounter()
         self.game_over = GameOver()
+        self.new_score = 0
+
+        x = open('data.txt', 'w')
+        x.write('0')
 
     def play(self):
         clock = pygame.time.Clock()
@@ -145,11 +149,12 @@ class PySpaceInvaders:
         self._collide_alien_and_barricades()
         self._collide_missile_and_saucer()
 
-    def score_save(self, current_score):
+    def score_save(self, update):
         try:
             d = open('data.txt', 'w')
-            d.write(str(current_score))
+            d.write(str(update))
             d.close()
+
         except:
             print('error with saving')
 

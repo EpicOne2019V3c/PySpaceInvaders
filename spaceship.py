@@ -1,7 +1,8 @@
 import pygame
-
 from config import *
 from tools import MovingDirection
+from ui import Score
+
 
 class Missile:
     def __init__(self):
@@ -70,16 +71,27 @@ class Missile:
         self.is_active = False
 
 
+# noinspection PyBroadException
 def get_score():
+    cost = 1
     try:
         d = open('data.txt', 'r')
         total = int(d.read())
-        x = open('data.txt', 'w')
-        x.write(str(total - 100))
-        print(total - 100)
-        d.close()
+        if int(total) < cost:
+            d.close()
+            return
+        d = open('data.txt', 'w')
+        new_value = int(total) - int(cost)
+        d.write(str(new_value))
     except:
         print('error with uploading')
+    finally:
+        d = open('data.txt', 'r')
+        total = int(d.read())
+        Score().value = int(total)
+        print("Score: " + str(total))
+        d.close()
+
 
 class Spaceship:
     def __init__(self):
@@ -108,7 +120,7 @@ class Spaceship:
         self.destruction_sound.stop()
 
         self.rect = self.sprite.get_rect(center=SPACESHIP_STARTING_POSITION)
-        
+
         self.moving_direction = MovingDirection.IDLE
         self.move_amount = 0
 
@@ -199,8 +211,13 @@ class Spaceship:
         self.move_amount += dt_s * SPACESHIP_SPEED_PIXEL_PER_SECOND
 
         if self.dash:
-            self.move_amount *= 2
-            get_score()
+            try:
+                d = open('data.txt', 'r')
+                if int(d.read()) > 10:
+                    self.move_amount *= 2
+                    get_score()
+            finally:
+                d.close()
 
         if self.move_amount > 1.:
 
